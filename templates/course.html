@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ course.name }}</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+      }
+      header {
+        background-color: #4caf50;
+        color: white;
+        padding: 1em 0;
+        text-align: center;
+      }
+      h1,
+      h2,
+      h3,
+      h4 {
+        color: #333;
+      }
+      .container {
+        width: 80%;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: white;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      ul {
+        list-style-type: none;
+        padding: 0;
+      }
+      li {
+        margin-bottom: 20px;
+      }
+      li h3 {
+        margin: 0;
+        padding: 0;
+      }
+      li p {
+        margin: 5px 0;
+      }
+      .questions ul {
+        padding-left: 20px;
+      }
+      .questions li {
+        margin-bottom: 10px;
+      }
+      form {
+        margin-top: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>{{ course.name }}</h1>
+    </header>
+    <div class="container">
+      <h2>Assignments</h2>
+      <ul>
+        {% for assignment in assignments %}
+        <li>
+          <h3>{{ assignment.name }}</h3>
+          <p>{{ assignment.description }}</p>
+          <div class="questions">
+            <h4>Questions</h4>
+            <ul>
+              {% for question in assignment.questions.split(';') %}
+              <li>{{ question }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+          <form action="{{ url_for('submit_assignment') }}" method="POST">
+            <input
+              type="hidden"
+              name="assignment_id"
+              value="{{ assignment.id }}"
+            />
+            <label for="grade">Enter Grade:</label>
+            <input type="number" name="grade" required />
+            <button type="submit">Submit Grade</button>
+          </form>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </body>
+</html>
