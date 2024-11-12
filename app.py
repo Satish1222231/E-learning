@@ -71,7 +71,54 @@ def populate_database():
 
 @app.route('/')
 def home():
-    return "<h1>Default Page</h1>"
+    return '''<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-learning Platform</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+        }
+        h1 {
+            font-size: 3em;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .button-container {
+            margin-top: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1em;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>E-learning Platform</h1>
+    <div class="button-container">
+        <form action="/home" method="get">
+            <button type="submit">Home</button>
+        </form>
+    </div>
+</body>
+</html>'''
 
 @app.route('/home')
 def index():
@@ -116,7 +163,57 @@ def submit_assignment():
     grade = Grades(grade=grade_value, assignment_id=assignment_id)
     db.session.add(grade)
     db.session.commit()
-    return "Grade submitted successfully"
+    return '''<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submission Status</title>
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            color: #ffffff;
+            overflow: hidden;
+        }
+        .container {
+            text-align: center;
+            padding: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            max-width: 500px;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+        h1 {
+            font-size: 2.5em;
+            margin: 0;
+        }
+        p {
+            font-size: 1.2em;
+            margin-top: 15px;
+            color: #e0e0e0;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Answer Submitted Successfully</h1>
+        <p>Your response has been recorded. Thank you!</p>
+    </div>
+</body>
+</html>
+
+'''
 
 @app.route('/grades')
 def grades():
