@@ -1,13 +1,17 @@
-# E-learning
+# Installations
 
-This will be a platform with following specifications
+npm install flask
+pip install -U Flask-SQLAlchemy
+pip install flask flask-cors
 
-**Objective:** `Manage courses, users, and assessments in an online learning environment.`
-**Tasks:**
-**Create tables:** `Users, Courses, Assignments, Grades.`
-`Implement features for course management and student tracking.`
-`Explore user engagement strategies through data analysis.`
+# info
 
-Our contributers - Sai Satish, Bharadwaj
+http://127.0.0.1:5500/login end point takes data from form
 
-Satish work - complete index.html its a jinja template to write python code use {%%} to use a variable sent use {{}}
+# changes needed
+
+```html
+<a href="/login" class="text-blue-500">Login</a>
+```
+
+above line in `home.html`

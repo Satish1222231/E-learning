@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Flask Setup and Documentation</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+  </head>
+  <body
+    class="bg-gradient-to-r from-blue-500 via-indigo-600 to-purple-600 text-white"
+  >
+    <header class="text-center py-8">
+      <h1 class="text-4xl font-bold">Flask Setup and Deployment Guide</h1>
+    </header>
+
+    <section
+      class="max-w-4xl mx-auto p-8 bg-white text-black rounded-lg shadow-lg"
+    >
+      <h2 class="text-2xl font-semibold mb-4 text-blue-500">
+        Flask CLI Commands
+      </h2>
+      <p class="mb-4">
+        <strong>If reopening a project:</strong>
+        Activate your environment using
+        <code class="bg-gray-200 px-2 py-1 rounded"
+          >.\env\Scripts\activate.ps1</code
+        >
+      </p>
+
+      <div class="mb-6">
+        <pre
+          class="bg-gray-900 text-white p-4 rounded"
+        ><code class="language-bash">pip install virtualenv</code></pre>
+        <pre
+          class="bg-gray-900 text-white p-4 rounded"
+        ><code class="language-bash">virtualenv env</code></pre>
+        <pre
+          class="bg-gray-900 text-white p-4 rounded"
+        ><code class="language-bash">pip install flask</code></pre>
+      </div>
+
+      <h3 class="text-xl font-semibold mb-2 text-green-600">
+        Start the Flask Server
+      </h3>
+      <pre
+        class="bg-gray-900 text-white p-4 rounded mb-6"
+      ><code class="language-bash">python ./app.py</code></pre>
+
+      <pre
+        class="bg-gray-900 text-white p-4 rounded mb-6"
+      ><code class="language-bash">pip install flask-sqlalchemy</code></pre>
+      <pre
+        class="bg-gray-900 text-white p-4 rounded"
+      ><code class="language-python">
+from app import app, db
+with app.app_context():
+    db.create_all()
+      </code></pre>
+    </section>
+
+    <section
+      class="max-w-4xl mx-auto p-8 bg-white text-black rounded-lg shadow-lg mt-8"
+    >
+      <h2 class="text-2xl font-semibold mb-4 text-blue-500">
+        Deploying on Heroku
+      </h2>
+      <div class="mb-6">
+        <pre
+          class="bg-gray-900 text-white p-4 rounded mb-4"
+        ><code class="language-bash">pip install gunicorn</code></pre>
+        <p class="mb-4">
+          <strong>Download Heroku CLI:</strong>
+          <a
+            href="https://devcenter.heroku.com/articles/heroku-cli"
+            class="text-blue-500 underline"
+            target="_blank"
+          >
+            Get it here
+          </a>
+        </p>
+      </div>
+
+      <h3 class="text-xl font-semibold mb-2 text-green-600">Steps</h3>
+      <ul class="list-disc list-inside mb-6 space-y-2">
+        <li>
+          <code class="bg-gray-200 px-2 py-1 rounded"
+            >pip freeze > requirements.txt</code
+          >
+        </li>
+        <li>
+          Create a
+          <code class="bg-gray-200 px-2 py-1 rounded">Procfile</code> with
+          <code>web: gunicorn app:app</code>
+        </li>
+      </ul>
+
+      <pre
+        class="bg-gray-900 text-white p-4 rounded mb-6"
+      ><code class="language-bash">heroku login</code></pre>
+      <pre
+        class="bg-gray-900 text-white p-4 rounded mb-6"
+      ><code class="language-bash">git init</code></pre>
+      <pre
+        class="bg-gray-900 text-white p-4 rounded mb-6"
+      ><code class="language-bash">git add .</code></pre>
+      <pre
+        class="bg-gray-900 text-white p-4 rounded"
+      ><code class="language-bash">git commit -m "Initial commit"</code></pre>
+    </section>
+
+    <section
+      class="max-w-4xl mx-auto p-8 bg-white text-black rounded-lg shadow-lg mt-8"
+    >
+      <h2 class="text-2xl font-semibold mb-4 text-blue-500">Flask Basics</h2>
+      <h3 class="text-xl font-semibold mb-2 text-green-600">
+        Hello World Example
+      </h3>
+      <pre
+        class="bg-gray-900 text-white p-4 rounded mb-6"
+      ><code class="language-python">
+from flask import Flask
+
+app = Flask(__name__)
+
+@app.route("/")
+def hello_world():
+    return "Hello, World!"
+
+if __name__ == "__main__":
+    app.run(debug=True, port=8000)
+      </code></pre>
+
+      <h3 class="text-xl font-semibold mb-2 text-green-600">Static Files</h3>
+      <pre
+        class="bg-gray-900 text-white p-4 rounded"
+      ><code class="language-bash">url_for('static', filename='style.css')</code></pre>
+    </section>
+
+    <footer class="text-center py-4 bg-gray-800 text-white mt-8">
+      <p>&copy; 2024 Flask Documentation</p>
+    </footer>
+  </body>
+</html>

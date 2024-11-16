@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MongoDB Documentation</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/styles/default.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/highlight.min.js"></script>
+    <script>
+      hljs.highlightAll();
+    </script>
+  </head>
+  <body
+    class="bg-gradient-to-br from-blue-900 to-gray-900 text-white font-sans leading-relaxed"
+  >
+    <!-- Header -->
+    <header
+      class="text-center py-10 bg-gradient-to-r from-green-400 to-blue-600 shadow-lg"
+    >
+      <h1 class="text-5xl font-bold">MongoDB Documentation</h1>
+      <p class="mt-4 text-lg">A quick guide to MongoDB commands and features</p>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="bg-gray-800 text-white py-4 shadow-md">
+      <ul class="flex justify-center space-x-8">
+        <li><a href="#intro" class="hover:text-green-300">Introduction</a></li>
+        <li><a href="#commands" class="hover:text-green-300">Commands</a></li>
+        <li><a href="#operators" class="hover:text-green-300">Operators</a></li>
+        <li><a href="#regex" class="hover:text-green-300">Regex</a></li>
+      </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-5xl mx-auto p-6 space-y-10">
+      <!-- Introduction -->
+      <section
+        id="intro"
+        class="p-6 bg-white text-gray-900 rounded-lg shadow-lg"
+      >
+        <h2 class="text-3xl font-semibold text-green-600">
+          Introduction to MongoDB
+        </h2>
+        <p class="mt-4">
+          MongoDB is a NoSQL database that stores data in JSON-like documents
+          called BSON. It is highly scalable and flexible for modern application
+          development.
+        </p>
+        <pre
+          class="bg-gray-100 p-4 rounded mt-4"
+        ><code class="language-bash">npm install mongodb</code></pre>
+      </section>
+
+      <!-- Basic Commands -->
+      <section
+        id="commands"
+        class="p-6 bg-gray-800 text-white rounded-lg shadow-lg"
+      >
+        <h2 class="text-3xl font-semibold text-blue-400">Basic Commands</h2>
+        <div class="mt-6">
+          <h3 class="text-2xl font-semibold text-green-300">Insert Document</h3>
+          <pre
+            class="bg-gray-700 text-green-100 p-4 rounded"
+          ><code class="language-bash">db.collection.insertOne({ name: "Alice", age: 25 });</code></pre>
+        </div>
+        <div class="mt-6">
+          <h3 class="text-2xl font-semibold text-green-300">Find Documents</h3>
+          <pre
+            class="bg-gray-700 text-green-100 p-4 rounded"
+          ><code class="language-bash">db.collection.find({ age: { $gt: 20 } });</code></pre>
+        </div>
+      </section>
+
+      <!-- Operators -->
+      <section
+        id="operators"
+        class="p-6 bg-white text-gray-900 rounded-lg shadow-lg"
+      >
+        <h2 class="text-3xl font-semibold text-blue-600">
+          Comparison Operators
+        </h2>
+        <ul class="list-disc pl-6 mt-4 text-gray-800">
+          <li><code class="text-green-600">$gt</code>: Greater than</li>
+          <li><code class="text-green-600">$lt</code>: Less than</li>
+          <li>
+            <code class="text-green-600">$gte</code>: Greater than or equal to
+          </li>
+          <li>
+            <code class="text-green-600">$lte</code>: Less than or equal to
+          </li>
+        </ul>
+        <pre
+          class="bg-gray-100 p-4 rounded mt-4"
+        ><code class="language-bash">db.collection.find({ qty: { $gte: 5 } });</code></pre>
+      </section>
+
+      <!-- Regex -->
+      <section
+        id="regex"
+        class="p-6 bg-gray-800 text-white rounded-lg shadow-lg"
+      >
+        <h2 class="text-3xl font-semibold text-blue-400">
+          Regex and Pattern Matching
+        </h2>
+        <p class="mt-4">
+          Search for documents that match a specific pattern using
+          <code class="bg-gray-700 px-1 py-0.5 rounded">$regex</code>.
+        </p>
+        <pre
+          class="bg-gray-700 text-green-100 p-4 rounded mt-4"
+        ><code class="language-bash">db.collection.find({ name: { $regex: /^A/ } });</code></pre>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-center py-6 bg-gradient-to-t from-gray-900 to-blue-900">
+      <p class="text-gray-400">
+        &copy; 2024 MongoDB Documentation | All Rights Reserved
+      </p>
+    </footer>
+  </body>
+</html>
