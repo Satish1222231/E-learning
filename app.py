@@ -125,5 +125,15 @@ def submit_assignment(assignment_id):
     highest = max([score.score for score in scores])
     return jsonify({'highest': highest})
 
+@app.route('/delete_registration/<int:course_id>', methods=['POST'])
+def delete_registration(course_id):
+    data = request.get_json()
+    registered = Registered.query.filter_by(user_id=data.get('id'), course_id=course_id).first()
+    course = Courses.query.filter_by(id=course_id).first()
+    course.no_of_enrollments -= 1
+    db.session.delete(registered)
+    db.session.commit()
+    return jsonify({"message": "Course unregistered successfully"})
+
 if __name__ == '__main__':
     app.run(debug=True, port=5500)
