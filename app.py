@@ -30,7 +30,7 @@ class Registered(db.Model):
     date_registered = db.Column(db.DateTime, default=db.func.current_timestamp())
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    course_id = db.Column(db.Integer, db.ForeignKey('courses.id'))
+    course_id = db.Column(db.Integer, db.ForeignKey('courses.id'), unique=True)
     completion_status = db.Column(db.Float, default=0.0)
 
 class Assignment(db.Model):
@@ -104,6 +104,8 @@ def get_registered_courses():
 @app.route('/register_course/<int:course_id>', methods=['POST', 'GET'])
 def register_course(course_id):
     user = request.get_json()
+    if Registered.query.filter_by(user_id=user.get('id'), course_id=course_id).first():
+        return jsonify({"message": "Course already registered"}), 400
     course = Courses.query.filter_by(id=course_id).first()
     course.no_of_enrollments += 1
     db.session.commit()
