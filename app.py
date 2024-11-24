@@ -27,9 +27,10 @@ class Courses(db.Model):
     no_of_enrollments = db.Column(db.Integer, default=0)
 
 class Registered(db.Model):
+    date_registered = db.Column(db.DateTime, default=db.func.current_timestamp())
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    course_id = db.Column(db.Integer, db.ForeignKey('courses.id'))
+    course_id = db.Column(db.Integer, db.ForeignKey('courses.id'), unique=True)
     completion_status = db.Column(db.Float, default=0.0)
 
 class Assignment(db.Model):
@@ -47,11 +48,11 @@ class Scores(db.Model):
 @app.route('/create_db')
 def create_db():
     db.create_all()
-    # courses = ['MongoDB', 'Flask', 'R Software']
-    # for i in courses:
-    #     course = Courses(name=i)
-    #     db.session.add(course)
-    # db.session.commit()
+    courses = ['MongoDB', 'Flask', 'R Software']
+    for i in courses:
+        course = Courses(name=i)
+        db.session.add(course)
+    db.session.commit()
     return 'Database created successfully'
 
 # Home page
@@ -69,11 +70,13 @@ def login():
     password = data.get('password')
     name = data.get('name')  # Extract 'name' for new user registration
 
-    user = User.query.filter_by(name = name, email=email, password=password).first()
+    user = User.query.filter_by(email=email).first()
 
-    if user:  # If user exists
+    if user and user.name == name and user.password == password:  # If user exists
         userdata = {'id': user.id, 'name': user.name}
         return jsonify(userdata)
+    elif user:
+        return jsonify({"error": "Invalid credentials"}), 400
     else:  # Register a new user
         if name:  # Ensure 'name' is provided for new user creation
             new_user = User(name=name, email=email, password=password)
@@ -94,13 +97,15 @@ def get_courses():
 def get_registered_courses():
     user = request.get_json()
     registered = Registered.query.filter_by(user_id=user.get('id')).all()
-    registered_courses = [{'course_id': course.course_id, 'completion_status': course.completion_status} for course in registered]
+    registered_courses = [{'course_id': course.course_id, 'completion_status': course.completion_status, 'date_registered': course.date_registered} for course in registered]
     return jsonify({"registered_courses": registered_courses})
 
     
 @app.route('/register_course/<int:course_id>', methods=['POST', 'GET'])
 def register_course(course_id):
     user = request.get_json()
+    if Registered.query.filter_by(user_id=user.get('id'), course_id=course_id).first():
+        return jsonify({"message": "Course already registered"}), 400
     course = Courses.query.filter_by(id=course_id).first()
     course.no_of_enrollments += 1
     db.session.commit()
@@ -124,6 +129,16 @@ def submit_assignment(assignment_id):
     scores = Scores.query.filter_by(assignment_id=assignment_id).all()
     highest = max([score.score for score in scores])
     return jsonify({'highest': highest})
+
+@app.route('/delete_registration/<int:course_id>', methods=['POST'])
+def delete_registration(course_id):
+    data = request.get_json()
+    registered = Registered.query.filter_by(user_id=data.get('id'), course_id=course_id).first()
+    course = Courses.query.filter_by(id=course_id).first()
+    course.no_of_enrollments -= 1
+    db.session.delete(registered)
+    db.session.commit()
+    return jsonify({"message": "Course unregistered successfully"})
 
 if __name__ == '__main__':
     app.run(debug=True, port=5500)
